@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UPI Voice Announcer</string>
+    <string name="status_label">Status</string>
+    <string name="status_active">✓ Notification Listener Active</string>
+    <string name="status_inactive">✗ Notification Listener Inactive</string>
+    <string name="enable_now">Enable Now</string>
+    <string name="test_tts">Test TTS</string>
+    <string name="recent_payments">Recent Payments</string>
+    <string name="no_payments">No payments received yet</string>
+    <string name="info_text">Grant notification access in Settings to receive payment announcements. The app requires permission to read notifications from UPI payment apps and will announce incoming payments using Text-to-Speech.</string>
+    <string name="notification_listener_label">UPI Voice Announcer Listener</string>
+</resources>
