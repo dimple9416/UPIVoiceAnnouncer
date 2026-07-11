@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-gumroad-field="name">Healthy and Hearty</title>
+    <meta name="description" content="Transform your health journey with evidence-based nutrition and wellness guidance.">
+    <meta name="theme-color" content="#10b981">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --color-primary: #10b981;
+            --color-primary-dark: #059669;
+            --color-accent: #f97316;
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            @apply bg-gray-900 text-gray-100;
+        }
+
+        body:not(.dark-mode) {
+            @apply bg-white text-gray-900;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .dark-mode .hero-gradient {
+            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card-shadow:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .dark-mode .card-shadow {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-mode .card-shadow:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-primary {
+            @apply bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95;
+            cursor: pointer;
+        }
+
+        .btn-primary:disabled {
+            @apply opacity-50 cursor-not-allowed transform hover:scale-100;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .price-display {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .testimonial-card {
+            @apply border-l-4 border-emerald-500 pl-4 py-4;
+        }
+
+        .dark-mode .testimonial-card {
+            @apply border-emerald-400;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.3s ease;
+        }
+
+        .dark-mode .modal-content {
+            background-color: #1f2937;
+        }
+
+        .close-modal {
+            cursor: pointer;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            float: right;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+
+        .dark-mode .close-modal:hover {
+            color: #fff;
+        }
+
+        input[type="number"] {
+            @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 transition;
+        }
+
+        .dark-mode input[type="number"] {
+            @apply bg-gray-800 border-gray-600 text-white;
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md border-b" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🌱</span>
+                    <span class="font-bold text-xl" data-gumroad-field="name">Healthy and Hearty</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="darkModeToggle" class="p-2 rounded-lg hover:bg-gray-200 dark-mode-toggle transition" aria-label="Toggle dark mode">
+                        <span class="text-xl">🌙</span>
+                    </button>
+                    <a href="#pricing" class="btn-primary text-sm">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20 md:py-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+            <div class="fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    Transform Your Health, Nourish Your Body
+                </h1>
+                <p class="text-lg md:text-xl mb-8 opacity-95">
+                    Discover science-backed nutrition strategies and wellness practices designed to help you build a healthier, happier life—one mindful choice at a time.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button data-gumroad-action="buy" class="btn-primary">
+                        Get Access Now
+                    </button>
+                    <a href="#features" class="bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-8 rounded-lg transition text-center">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="fade-in" style="animation-delay: 0.2s;">
+                <div class="bg-white/10 rounded-2xl p-8 backdrop-blur-sm border border-white/20">
+                    <div class="text-6xl text-center mb-4">🥗</div>
+                    <p class="text-center text-white/90">Your journey to wellness starts here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 scroll-reveal">What You'll Discover</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-shadow p-8 rounded-xl scroll-reveal">
+                    <div class="feature-icon bg-emerald-100 dark:bg-emerald-900/30 mb-6">
+                        🎯
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Personalized Nutrition Plans</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Tailored dietary guidance based on your lifestyle, preferences, and health goals.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card-shadow p-8 rounded-xl scroll-reveal" style="animation-delay: 0.1s;">
+                    <div class="feature-icon bg-emerald-100 dark:bg-emerald-900/30 mb-6">
+                        💪
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Wellness Practices</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Science-backed exercises, mindfulness routines, and daily habits for lasting health.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card-shadow p-8 rounded-xl scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="feature-icon bg-emerald-100 dark:bg-emerald-900/30 mb-6">
+                        📚
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Expert Guidance</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Learn from nutrition and wellness experts with years of real-world experience.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="card-shadow p-8 rounded-xl scroll-reveal" style="animation-delay: 0.3s;">
+                    <div class="feature-icon bg-emerald-100 dark:bg-emerald-900/30 mb-6">
+                        ✅
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Practical Recipes</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Delicious, easy-to-follow recipes designed for busy schedules and varied tastes.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="card-shadow p-8 rounded-xl scroll-reveal" style="animation-delay: 0.4s;">
+                    <div class="feature-icon bg-emerald-100 dark:bg-emerald-900/30 mb-6">
+                        📊
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Progress Tracking</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Monitor your health improvements and celebrate wins along your wellness journey.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="card-shadow p-8 rounded-xl scroll-reveal" style="animation-delay: 0.5s;">
+                    <div class="feature-icon bg-emerald-100 dark:bg-emerald-900/30 mb-6">
+                        🎁
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Lifetime Updates</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Get continuous improvements and new content as we expand the program.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-16 md:py-24 bg-gray-50 dark:bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="scroll-reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-8">Why Choose Healthy and Hearty?</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 text-2xl mr-4">✓</span>
+                            <span>Evidence-based strategies trusted by thousands</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 text-2xl mr-4">✓</span>
+                            <span>Flexible approach that fits your lifestyle</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 text-2xl mr-4">✓</span>
+                            <span>No complex jargon—just practical, actionable advice</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 text-2xl mr-4">✓</span>
+                            <span>Accessible to beginners and wellness enthusiasts alike</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-emerald-500 text-2xl mr-4">✓</span>
+                            <span>One-time investment, lifetime access</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl p-12 text-white text-center">
+                        <div class="text-6xl mb-4">🌟</div>
+                        <p class="text-xl font-semibold mb-4">Join thousands of people</p>
+                        <p class="text-lg opacity-90">who've already transformed their health and wellness with our program</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof / Testimonials -->
+    <section class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 scroll-reveal">What People Are Saying</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="testimonial-card scroll-reveal">
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                        "This program changed my perspective on nutrition. I finally feel energized and healthy without the guilt trips!"
+                    </p>
+                    <p class="font-semibold">— Sarah M.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">New York, USA</p>
+                </div>
+
+                <div class="testimonial-card scroll-reveal" style="animation-delay: 0.1s;">
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                        "The recipes are actually delicious and easy to make. My whole family loves them now!"
+                    </p>
+                    <p class="font-semibold">— James T.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">California, USA</p>
+                </div>
+
+                <div class="testimonial-card scroll-reveal" style="animation-delay: 0.2s;">
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">
+                        "Best investment in my health I've made. Clear, practical, and genuinely life-changing!"
+                    </p>
+                    <p class="font-semibold">— Maria R.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">London, UK</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-16 md:py-24 bg-gray-50 dark:bg-gray-800/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 scroll-reveal">Simple, Transparent Pricing</h2>
+            
+            <div class="card-shadow rounded-2xl p-8 md:p-12 bg-white dark:bg-gray-800 scroll-reveal">
+                <div class="text-center mb-8">
+                    <div class="price-display text-emerald-600 dark:text-emerald-400 mb-2">
+                        <span data-gumroad-field="price">$29.99</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 text-lg">One-time investment for lifetime access</p>
+                </div>
+
+                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-6 mb-8">
+                    <p class="text-center text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                        <span data-gumroad-field="description">
+                            Get complete access to personalized nutrition plans, wellness practices, expert guidance, recipes, progress tracking, and lifetime updates. Start transforming your health today.
+                        </span>
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-lg">Included in Your Purchase:</h3>
+                        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                            <li class="flex items-center">
+                                <span class="text-emerald-500 mr-3">✓</span> Complete nutrition program
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-emerald-500 mr-3">✓</span> 50+ healthy recipes
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-emerald-500 mr-3">✓</span> Wellness guides and PDFs
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="space-y-3">
+                        <h3 class="font-bold text-lg">&nbsp;</h3>
+                        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                            <li class="flex items-center">
+                                <span class="text-emerald-500 mr-3">✓</span> Progress tracking tools
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-emerald-500 mr-3">✓</span> Lifetime updates
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-emerald-500 mr-3">✓</span> Money-back guarantee
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4 mb-8 text-center">
+                    <p class="text-emerald-900 dark:text-emerald-100">
+                        <span class="font-semibold">30-day money-back guarantee.</span> No questions asked. Your satisfaction is our priority.
+                    </p>
+                </div>
+
+                <button data-gumroad-action="buy" class="btn-primary w-full text-center text-lg py-4">
+                    Unlock Your Wellness Journey
+                </button>
+
+                <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+                    Secure payment via Gumroad. Lifetime access. No recurring charges.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="hero-gradient text-white py-16 md:py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 slide-up">Ready to Transform Your Health?</h2>
+            <p class="text-lg md:text-xl mb-10 opacity-95">
+                Start your wellness journey today. Join thousands of people already living healthier, happier lives.
+            </p>
+            <button data-gumroad-action="buy" class="bg-white text-emerald-600 font-bold py-3 px-10 rounded-lg hover:bg-gray-100 transition text-lg">
+                Get Instant Access Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold mb-4">Product</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#features" class="hover:text-white transition">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Company</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">About</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms</a></li>
+                        <li><a href="#" class="hover:text-white transition">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Connect</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-white transition">Twitter</a></li>
+                        <li><a href="#" class="hover:text-white transition">Instagram</a></li>
+                        <li><a href="#" class="hover:text-white transition">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-sm">
+                <p>&copy; 2025 Healthy and Hearty. All rights reserved. Made with ❤️ for your wellness journey.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to light
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            updateDarkModeIcon();
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            updateDarkModeIcon();
+        });
+
+        function updateDarkModeIcon() {
+            const icon = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            darkModeToggle.querySelector('span').textContent = icon;
+        }
+
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = document.body.classList.contains('dark-mode') 
+                    ? 'rgba(17, 24, 39, 0.95)' 
+                    : 'rgba(255, 255, 255, 0.95)';
+                navbar.style.borderBottomColor = document.body.classList.contains('dark-mode')
+                    ? 'rgba(75, 85, 99, 0.5)'
+                    : 'rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.backgroundColor = 'transparent';
+                navbar.style.borderBottomColor = 'transparent';
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Gumroad Buy Integration
+        document.querySelectorAll('[data-gumroad-action="buy"]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Gumroad will intercept this and launch checkout
+                // The parent window (Gumroad product page) receives this event
+                const params = {
+                    variant: this.getAttribute('data-gumroad-option'),
+                    quantity: this.getAttribute('data-gumroad-quantity'),
+                    price: this.getAttribute('data-gumroad-price'),
+                    recurrence: this.getAttribute('data-gumroad-recurrence')
+                };
+                
+                // Post message to parent for custom checkout handling
+                if (window.parent !== window) {
+                    window.parent.postMessage({ 
+                        type: 'gumroad:checkout', 
+                        params: params 
+                    }, '*');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
